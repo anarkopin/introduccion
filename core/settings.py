@@ -1,19 +1,17 @@
 from pathlib import Path
+import os
+import environ 
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+env= environ.Env() #creando la variable
+environ.Env.read_env() #leer la variable
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SECRET_KEY= os.environ.get('SECRET_KEY')
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
+DEBUG = os.environ.get('DEBUG')
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_)!!8#xdw8t-^8@_r7=m#ux30yump0xqpog-0)jc!zu!a**c!('
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -25,6 +23,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    'core',
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -42,7 +43,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -55,7 +56,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'core.wsgi.application'
+#Esto hace que nuestra aplicacion sea entendio por los servidores
+WSGI_APPLICATION = 'core.wsgi.application' 
 
 
 # Database
@@ -69,8 +71,7 @@ DATABASES = {
 }
 
 
-# Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
+#aqui se validan las contraseña
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -102,8 +103,7 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
+#Esto es para trabajar con las imagenes
 
 STATIC_URL = '/static/'
 
